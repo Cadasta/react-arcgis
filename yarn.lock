@@ -16,6 +16,10 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
+"@types/arcgis-js-api@^4.6.0":
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/@types/arcgis-js-api/-/arcgis-js-api-4.6.0.tgz#8224849e9ab38d55faf1a09ca997287f5afc554e"
+
 "@types/jest@^22.2.3":
   version "22.2.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
@@ -24,7 +28,7 @@
   version "9.6.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.4.tgz#0ef7b4cfc3499881c81e0ea1ce61a23f6f4f5b42"
 
-"@types/react-dom@^16.0.5":
+"@types/react-dom@^16.0.3", "@types/react-dom@^16.0.5":
   version "16.0.5"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.5.tgz#a757457662e3819409229e8f86795ff37b371f96"
   dependencies:
@@ -34,6 +38,12 @@
 "@types/react@*", "@types/react@^16.3.9":
   version "16.3.9"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.9.tgz#15be16b53c89aac558cf6445774502b2792555ff"
+  dependencies:
+    csstype "^2.2.0"
+
+"@types/react@^16.0.35":
+  version "16.3.11"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.11.tgz#345a17f1c96420f10b9f0dc696c31091ff9d66ea"
   dependencies:
     csstype "^2.2.0"
 
@@ -2375,6 +2385,10 @@ esrecurse@^4.1.0:
   resolved "https://registry.yarnpkg.com/esrecurse/-/esrecurse-4.2.1.tgz#007a3b9fdbc2b3bb87e4879ea19c92fdbd3942cf"
   dependencies:
     estraverse "^4.1.0"
+
+esri-loader@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-2.2.0.tgz#fcba0235de64129b7f3d4b512d099374fe137ff4"
 
 estraverse@^4.1.0, estraverse@^4.1.1, estraverse@^4.2.0:
   version "4.2.0"
@@ -5642,6 +5656,15 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-arcgis@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-arcgis/-/react-arcgis-3.2.1.tgz#adc4e55d47a79174ad2b6ad0202a10a431ac0d4a"
+  dependencies:
+    "@types/arcgis-js-api" "^4.6.0"
+    "@types/react" "^16.0.35"
+    "@types/react-dom" "^16.0.3"
+    esri-loader "^2.2.0"
 
 react-dev-utils@4.2.1:
   version "4.2.1"
