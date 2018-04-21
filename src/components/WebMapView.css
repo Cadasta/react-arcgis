@@ -1,7 +1,4 @@
 .map {
   height: 100%;
-}
-
-#base-container {
-  height: 100% !important;
+  background-color: Gainsboro;
 }

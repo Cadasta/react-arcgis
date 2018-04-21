@@ -16,6 +16,7 @@ class App extends React.Component<object, object> {
           </Navbar>
         </div>
         <div className="row h-100">
+          {/* TODO: This should probably be a route (the home route) */}
           <WebMapContainer
             portalId="459eb07ed2544fd4b655b87dca7abf8c"
           />
