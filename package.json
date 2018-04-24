@@ -2,6 +2,7 @@
   "name": "esri-react",
   "version": "0.1.0",
   "private": true,
+  "main": "src/index.tsx",
   "dependencies": {
     "bootstrap": "4",
     "react": "^16.3.1",
