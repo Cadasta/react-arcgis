@@ -6,12 +6,16 @@ Example app to explore how stuff works.
 
 - Uses WebMap [Survey Map](https://cadasta.maps.arcgis.com/home/item.html?id=459eb07ed2544fd4b655b87dca7abf8c)
 
-
 TODO:
-- Describe https://github.com/nicksenger/react-arcgis
+- Document core libraries:
+  - [react-arcgis](https://github.com/nicksenger/react-arcgis)
 - Discuss code layout
   - Currently using Containers vs Components
   - Should we use more of a feature-based layout? https://marmelab.com/blog/2015/12/17/react-directory-structure.html
+- Polyfills
+  - From [react-arcgis](https://github.com/nicksenger/react-arcgis):
+    > If you need to support browsers lacking a native promise implementation, you will have to add a global Promise constructor polyfill to your project, as react-arcgis does not include one. I recommend [es6-promise](https://www.npmjs.com/package/es6-promise).
+- Add [ErrorBoundaries](https://reactjs.org/docs/error-boundaries.html)
 
 ---
 

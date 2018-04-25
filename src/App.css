@@ -1,6 +1,12 @@
 .cursor-pointer {
   cursor: pointer;
 }
+.cursor-pointer:disabled {
+  cursor: default;
+}
 .cursor-default {
   cursor: default;
+}
+.scroll-overflow {
+  overflow: scroll;
 }

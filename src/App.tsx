@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Navbar } from 'reactstrap';
+
 import { Footer } from './components/Footer';
 import { WebMapContainer } from './containers/WebMapContainer';
+
 import './App.css';
 
 // TODO: This should probably be a route (the home route)

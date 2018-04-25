@@ -1,99 +1,104 @@
 import * as React from 'react';
 
-interface AttributeTableProps {
-  layers: __esri.Collection<__esri.FeatureLayer>;
-  handleLayerSelect: (e: React.MouseEvent<HTMLElement>) => void;
-  selectedLayer?: __esri.FeatureLayer;
-  selectedLayerAttributes?: object;
-}
-interface AttributeTableState {
+import { stringifyUnixTimestamp } from '../utils';
 
-}
-export class AttributeTable extends React.Component<AttributeTableProps, AttributeTableState> {
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.layers.length > 1 && <LayerTabs {...this.props} />}
-        {
-          this.props.selectedLayer ?
-          <LayerTable
-            layer={this.props.selectedLayer}
-            attributes={this.props.selectedLayerAttributes}
-          /> :
-          'Fetching attributes...'
-        }
-      </React.Fragment>
-    );
-  }
-}
-
-function LayerTabs({layers, handleLayerSelect, selectedLayer}: AttributeTableProps) {
-  return (
-    <ul className="nav nav-tabs">
-      {
-        layers
-          .map((l: __esri.FeatureLayer) => (
-            <li key={l.id} className="nav-item">
-              <span
-                className={
-                  `nav-link ${
-                    selectedLayer && (l.id === selectedLayer.id) ?
-                    'active cursor-default' :
-                    'cursor-pointer'}`
-                }
-                onClick={handleLayerSelect}
-              >
-                {l.title}
-              </span>
-            </li>
-          ))
-          .toArray()
-      }
-    </ul>
-  );
-}
+import './AttributeTable.css';
 
 interface LayerTableProps {
   layer: __esri.FeatureLayer;
-  attributes?: object;
+  featureSet?: __esri.FeatureSet;
 }
-export const LayerTable = ({layer, attributes}: LayerTableProps) => (
-  <table>
-    <thead>
-      <tr>
-        {layer.fields.map((field: __esri.Field, i) => (
-          <th
-            key={i}
-            title={field.alias}
-          >
-            {field.name}
-          </th>
-        ))}
+export const LayerTable = ({layer, featureSet}: LayerTableProps) => {
+  const headerColumns = layer.fields.map((field: __esri.Field, i) => (
+    <th key={i} title={field.alias}>
+      {field.name}
+    </th>
+  ));
+  let rows: JSX.Element | JSX.Element[] = (
+    <tr>
+      <td colSpan={layer.fields.length}>
+        <span>Fetching FeatureSet...</span>
+      </td>
+    </tr>
+  );
+  if (featureSet) {
+    rows = featureSet.features.map((feature: __esri.Graphic, i) => (
+      <tr key={i}>
+        {
+          layer.fields.map((field: __esri.Field, j) => (
+            <td
+              key={j}
+              title={feature.attributes[field.name]}
+              // data-index={i}
+              // onclick={this.goTo}
+            >
+              {
+                field.type === 'date'
+                ? stringifyUnixTimestamp(feature.attributes[field.name])
+                : feature.attributes[field.name]
+              }
+              {feature.attributes[field.name]}
+            </td>
+          ))
+        }
       </tr>
-    </thead>
-    <tbody>
-      {/* {
-        this.features.map((feature: __esri.Graphic) => (
-          <tr>
-            {
-              this.fields.map((field: __esri.Field, i) => (
-                <td
-                  key={i}
-                  title={feature.attributes[field.name]}
-                  data-index={i}
-                  onclick={this.goTo}
-                >
-                  {
-                    field.type === 'date'
-                    ? this.stringifyUnixTimestamp(feature.attributes[field.name])
-                    : feature.attributes[field.name]
-                  }
-                </td>
-              ))
-            }
-          </tr>
+    ));
+  }
+  return (
+    <table className="attribute-table">
+      <thead>
+        <tr>
+          {headerColumns}
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+      </tbody>
+    </table>
+  );
+};
+
+interface AttributeTableProps {
+  layers: Array<__esri.FeatureLayer>;
+  handleLayerSelect: (e: React.MouseEvent<HTMLElement>) => void;
+  selectedLayer?: __esri.FeatureLayer;
+  selectedLayerFeatureSet?: __esri.FeatureSet;
+}
+const LayerTabs = ({layers, handleLayerSelect, selectedLayer}: AttributeTableProps) => (
+  <ul className="nav nav-tabs">
+    {
+      layers
+        .map((l: __esri.FeatureLayer) => (
+          <li key={l.id} className="nav-item">
+            <span
+              className={
+                `nav-link ${
+                  selectedLayer && (l.id === selectedLayer.id) ?
+                  'active cursor-default' :
+                  'cursor-pointer'}`
+              }
+              onClick={handleLayerSelect}
+            >
+              {l.title}
+            </span>
+          </li>
         ))
-      } */}
-    </tbody>
-  </table>
+    }
+  </ul>
+);
+export const AttributeTable = (props: AttributeTableProps) => (
+  <React.Fragment>
+    {
+      props.layers.length > 1 &&
+      <LayerTabs {...props} />
+    }
+    {
+      props.selectedLayer ?
+      <LayerTable
+        layer={props.selectedLayer}
+        featureSet={props.selectedLayerFeatureSet}
+      /> :
+      'Fetching layers...'
+    }
+  </React.Fragment>
 );

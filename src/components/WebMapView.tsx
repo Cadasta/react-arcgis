@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { WebMap as EsriWebMap } from 'react-arcgis';
+
 import { AttributeTable } from './AttributeTable';
+
 import './WebMapView.css';
 
 interface WebMapViewProps {
@@ -9,43 +11,41 @@ interface WebMapViewProps {
   toggleAttrTable: (e: React.MouseEvent<HTMLElement>) => void;
   handleMapLoad: (map: __esri.Map, view: __esri.MapView | __esri.SceneView) => void;
   handleLayerSelect: (e: React.MouseEvent<HTMLElement>) => void;
-  layers?: __esri.Collection<__esri.FeatureLayer>;
+  layers: Array<__esri.FeatureLayer>;
   selectedLayer?: __esri.FeatureLayer;
-  selectedLayerAttributes?: object;
+  selectedLayerFeatureSet?: __esri.FeatureSet;
 }
 export const WebMapView = (props: WebMapViewProps) => (
   <React.Fragment>
     <div className="col-2">
       <button
         onClick={props.toggleAttrTable}
-        disabled={!props.layers}
+        disabled={!props.layers.length}
         className={props.layers ? 'cursor-pointer' : 'cursor-default'}
       >
-        {/* TODO: Can we put this IN the map as a standard plugin? */}
           Attribute Table
       </button>
     </div>
-    <div className="col">
+    <div className="col scroll-overflow">
       <div
         // TODO: rm need to set h-75, row should autofill height
         className={`map row ${props.isAttrTableVisible ? 'h-75' : ''}`}
       >
         <EsriWebMap
           id={props.portalId}
-          mapProperties={{ basemap: 'satellite' }}
           onLoad={props.handleMapLoad}
           onFail={console.error}
         />
       </div>
       {props.isAttrTableVisible && (
-        <div className="row h-25">
+        <div className="row scroll-overflow h-25">
           {
             props.layers ?
             <AttributeTable
               layers={props.layers}
               selectedLayer={props.selectedLayer}
               handleLayerSelect={props.handleLayerSelect}
-              selectedLayerAttributes={props.selectedLayerAttributes}
+              selectedLayerFeatureSet={props.selectedLayerFeatureSet}
             /> :
             'Loading...'
           }
