@@ -6,7 +6,7 @@ Example app to explore how stuff works.
 
 - Uses WebMap [Survey Map](https://cadasta.maps.arcgis.com/home/item.html?id=459eb07ed2544fd4b655b87dca7abf8c)
 
-TODO:
+## TODO
 - Document core libraries:
   - [react-arcgis](https://github.com/nicksenger/react-arcgis)
 - Discuss code layout
@@ -27,8 +27,8 @@ The codebase follows the conventions of [Containers vs Components](https://mediu
 ### Installation
 
 ```bash
-yarn global add create-react-app // Install create-react-app
-yarn // Install package dependencies
+yarn global add create-react-app # Install create-react-app
+yarn # Install package dependencies
 ```
 
 ### Running Server
@@ -64,3 +64,4 @@ yarn test
     // this will only render the 'Yes' element if `isLoaded == true`, otherwised rendering the 'Nope' element
     { isLoaded ? <h2>Yes!</h2> : <h2>Nope!</h2> }
     ```
+`if` and `if/else` statements are actually valid within React, however this codebase has an established pattern of using the above instead.
