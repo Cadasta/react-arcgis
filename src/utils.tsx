@@ -1,4 +1,5 @@
 export const stringifyUnixTimestamp = (datetime: string): string => {
+  if (datetime === undefined) { return datetime; }
   try {
     return new Date(datetime).toLocaleString();
   } catch (error) {

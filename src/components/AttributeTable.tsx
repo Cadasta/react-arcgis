@@ -17,7 +17,7 @@ export const LayerTable = ({layer, featureSet}: LayerTableProps) => {
   let rows: JSX.Element | JSX.Element[] = (
     <tr>
       <td colSpan={layer.fields.length}>
-        <span>Fetching FeatureSet...</span>
+        <span>Fetching features...</span>
       </td>
     </tr>
   );
@@ -37,7 +37,6 @@ export const LayerTable = ({layer, featureSet}: LayerTableProps) => {
                 ? stringifyUnixTimestamp(feature.attributes[field.name])
                 : feature.attributes[field.name]
               }
-              {feature.attributes[field.name]}
             </td>
           ))
         }
