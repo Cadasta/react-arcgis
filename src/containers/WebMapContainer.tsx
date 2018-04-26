@@ -20,8 +20,8 @@ export class WebMapContainer extends React.Component<WebMapComponentProps, WebMa
       layerFeatureSet: new Map(),
     };
     this.handleMapLoad = this.handleMapLoad.bind(this);
-    this.toggleAttrTable = this.toggleAttrTable.bind(this);
     this.handleLayerSelect = this.handleLayerSelect.bind(this);
+    this.toggleAttrTable = this.toggleAttrTable.bind(this);
   }
 
   /**
@@ -68,7 +68,7 @@ export class WebMapContainer extends React.Component<WebMapComponentProps, WebMa
   }
 
   /**
-   * Show/hide attribute table, possibly triggering a fetch of
+   * Show/hide attribute table, possibly triggering a fetch of the
    * featureset if necessary.
    */
   toggleAttrTable() {
@@ -86,14 +86,24 @@ export class WebMapContainer extends React.Component<WebMapComponentProps, WebMa
     layer.queryFeatures(layer.createQuery())
       .then((attrs: __esri.FeatureSet) => {
         this.state.layerFeatureSet.set(layer, attrs);
+        // It seems that setting a value into a Map object in the state
+        // does not trigger an update
         this.forceUpdate();
       });
   }
 
+  /**
+   * When someone clicks on an element, set selectedLayer to layer from
+   * layerFeatureSet with id matching element's 'data-layer-id' attribute.
+   */
   handleLayerSelect(e: React.MouseEvent<HTMLElement>) {
-    // TODO Set this.state.selectedLayer from key
-    // this.setState({selectedLayer})
-    console.log(e.target); // tslint:disable-line:no-console
+    const layerId = (e.target as HTMLElement).dataset.layerId;
+    const selectedLayer = this.featureLayers.find(l => l.id === layerId);
+    if (!selectedLayer) {
+      console.error(`Failed to find layer with id matching '${layerId}`); // tslint:disable-line:no-console
+      return;
+    }
+    this.setState({ selectedLayer });
   }
 
   render() {

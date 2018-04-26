@@ -29,8 +29,6 @@ export const LayerTable = ({layer, featureSet}: LayerTableProps) => {
             <td
               key={j}
               title={feature.attributes[field.name]}
-              // data-index={i}
-              // onclick={this.goTo}
             >
               {
                 field.type === 'date'
@@ -79,6 +77,7 @@ const LayerTabs = ({layers, handleLayerSelect, selectedLayer}: AttributeTablePro
                   'cursor-pointer'}`
               }
               onClick={handleLayerSelect}
+              data-layer-id={l.id}
             >
               {l.title}
             </span>
@@ -89,10 +88,7 @@ const LayerTabs = ({layers, handleLayerSelect, selectedLayer}: AttributeTablePro
 );
 export const AttributeTable = (props: AttributeTableProps) => (
   <React.Fragment>
-    {
-      props.layers.length > 1 &&
-      <LayerTabs {...props} />
-    }
+    <LayerTabs {...props} />
     {
       props.selectedLayer ?
       <LayerTable

@@ -28,7 +28,7 @@ export const WebMapView = (props: WebMapViewProps) => (
     </div>
     <div className="col scroll-overflow">
       <div
-        // TODO: rm need to set h-75, row should autofill height
+        // TODO: rm need to set h-75, ideally row should autofill height
         className={`map row ${props.isAttrTableVisible ? 'h-75' : ''}`}
       >
         <EsriWebMap

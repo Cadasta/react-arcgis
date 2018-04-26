@@ -6,7 +6,6 @@ import { WebMapContainer } from './containers/WebMapContainer';
 
 import './App.css';
 
-// TODO: This should probably be a route (the home route)
 class App extends React.Component<object, object> {
 
   render() {
