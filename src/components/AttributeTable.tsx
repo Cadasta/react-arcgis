@@ -44,16 +44,18 @@ export const LayerTable = ({layer, featureSet}: LayerTableProps) => {
     ));
   }
   return (
-    <table className="attribute-table">
-      <thead>
-        <tr>
-          {headerColumns}
-        </tr>
-      </thead>
-      <tbody>
-        {rows}
-      </tbody>
-    </table>
+    <div className="attribute-table table-responsive">
+      <table className="table table-sm table-bordered table-striped">
+        <thead className="thead-light">
+          <tr>
+            {headerColumns}
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
