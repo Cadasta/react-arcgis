@@ -82,6 +82,10 @@ export class WebMapContainer extends React.Component<WebMapComponentProps, WebMa
     }
   }
 
+  /**
+   * Given a layer, set that layer's featureset as a value in the state
+   * layerFeatureSet Map.
+   */
   fetchFeatureSet(layer: __esri.FeatureLayer) {
     layer.queryFeatures(layer.createQuery())
       .then((attrs: __esri.FeatureSet) => {
