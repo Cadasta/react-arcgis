@@ -50,8 +50,8 @@ yarn test
 * No `for` loops, use `.map`:
     ```js
     {
-        // Remember that repeated elements must have a 'key' attribute
-        ['apple', 'pear', 'carrot'].map((x: string, i) => <h2 key={i}>{x}</h2>)
+        // Remember that repeated elements must have a unique 'key' attribute
+        ['apple', 'pear', 'orange'].map((fruit: string, index) => <h2 key={index}>{fruit}</h2>)
     }
     ```
 * No `if` statement, use `&&`:
