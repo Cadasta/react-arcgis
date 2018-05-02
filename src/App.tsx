@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Navbar } from 'reactstrap';
-import { esriPromise } from 'react-arcgis';
 
 import { Footer } from './components/Footer';
 import { WebMapContainer } from './containers/WebMapContainer';
@@ -13,7 +12,6 @@ const portalUrl = 'https://www.arcgis.com/sharing';
 interface AppProps {}
 interface AppState {
   credential?: __esri.Credential;
-  identityManager?: __esri.IdentityManager;
 }
 
 class App extends React.Component<AppProps, AppState> {
@@ -21,26 +19,16 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {};
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
 
-    esriPromise([
-      'esri/identity/OAuthInfo',
-      'esri/identity/IdentityManager'
-    ]).then(([OAuthInfo, IdentityManager]) => {
-      const info = new OAuthInfo({
-          appId: 'y4Lx1l6456Mbf85z',
-          popup: false
-      });
+  handleLogin(credential: __esri.Credential | undefined): void {
+    this.setState({credential});
+  }
 
-      IdentityManager.registerOAuthInfos([info]);
-      IdentityManager.checkSignInStatus(portalUrl).then(
-        (c: __esri.Credential) => {
-          this.setState({credential: c, identityManager: IdentityManager});
-        },
-        () => {
-          this.setState({identityManager: IdentityManager});
-        }
-      );
-    });
+  handleLogout(): void {
+    this.setState({credential: undefined});
   }
 
   render() {
@@ -50,15 +38,16 @@ class App extends React.Component<AppProps, AppState> {
           <Navbar>
             Cadasta
             <IdentityContainer
-              credential={this.state.credential}
-              identityManager={this.state.identityManager}
               portalUrl={portalUrl}
+              credential={this.state.credential}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
             />
           </Navbar>
         </div>
         <div className="row h-100">
           {/* TODO: This should probably be a route (the home route) */}
-          {this.state.credential && 
+          {this.state.credential &&
             <WebMapContainer
               portalId="459eb07ed2544fd4b655b87dca7abf8c"
             />
