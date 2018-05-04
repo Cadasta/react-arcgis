@@ -4,15 +4,19 @@ import { esriPromise } from 'react-arcgis';
 
 import { Identity } from '../components/Identity';
 
+export interface IdentityManagerEvent {
+  credential: __esri.Credential;
+}
 interface IdentityComponentProps {
   credential?: __esri.Credential;
   portalUrl: string;
-  handleLoginChange: (credential?: __esri.Credential) => void;
+  appId: string;
+  handleLoginChange: (event: IdentityManagerEvent) => void;
 }
 interface IdentityComponentState {}
 
 export class IdentityContainer extends React.Component<IdentityComponentProps, IdentityComponentState> {
-  identityManager: __esri.IdentityManager;
+  IdentityManager: __esri.IdentityManager;
 
   constructor(props: IdentityComponentProps) {
     super(props);
@@ -25,32 +29,29 @@ export class IdentityContainer extends React.Component<IdentityComponentProps, I
       'esri/identity/OAuthInfo',
       'esri/identity/IdentityManager'
     ]).then(([OAuthInfo, IdentityManager]) => {
-      this.identityManager = IdentityManager;
+      this.IdentityManager = IdentityManager;
+
+      IdentityManager.on('credential-create', this.props.handleLoginChange);
+      IdentityManager.on('credentials-destroy', this.props.handleLoginChange);
 
       const info = new OAuthInfo({
-          appId: 'y4Lx1l6456Mbf85z',
-          popup: false
+        appId: this.props.appId,
+        popup: false
       });
-
-      this.identityManager.registerOAuthInfos([info]);
-      this.identityManager.checkSignInStatus(this.props.portalUrl).then(
-        (credential: __esri.Credential) => {
-          this.props.handleLoginChange(credential);
-        }
-      );
+      IdentityManager.registerOAuthInfos([info]);
+      IdentityManager.checkSignInStatus(this.props.portalUrl);
     });
   }
 
   handleLogout() {
-    if (this.identityManager) {
-      this.identityManager.destroyCredentials();
-      this.props.handleLoginChange();
+    if (this.IdentityManager) {
+      this.IdentityManager.destroyCredentials();
     }
   }
 
   handleLogin() {
-    if (this.identityManager) {
-      this.identityManager.getCredential(this.props.portalUrl);
+    if (this.IdentityManager) {
+      this.IdentityManager.getCredential(this.props.portalUrl);
     }
   }
 

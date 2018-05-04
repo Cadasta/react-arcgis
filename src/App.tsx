@@ -3,11 +3,12 @@ import { Navbar } from 'reactstrap';
 
 import { Footer } from './components/Footer';
 import { WebMapContainer } from './containers/WebMapContainer';
-import { IdentityContainer } from './containers/IdentityContainer';
+import { IdentityContainer, IdentityManagerEvent } from './containers/IdentityContainer';
 
 import './App.css';
 
 const portalUrl = 'https://www.arcgis.com/sharing';
+const appId = 'y4Lx1l6456Mbf85z';
 
 interface AppProps {}
 interface AppState {
@@ -21,8 +22,8 @@ class App extends React.Component<AppProps, AppState> {
     this.handleLoginChange = this.handleLoginChange.bind(this);
   }
 
-  handleLoginChange(credential?: __esri.Credential) {
-    this.setState({credential});
+  handleLoginChange(event: IdentityManagerEvent) {
+    this.setState({credential: event.credential});
   }
 
   render() {
@@ -34,6 +35,7 @@ class App extends React.Component<AppProps, AppState> {
             <IdentityContainer
               credential={this.state.credential}
               portalUrl={portalUrl}
+              appId={appId}
               handleLoginChange={this.handleLoginChange}
             />
           </Navbar>
