@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 
-import {Identity} from '../Identity';
+import { Identity } from '../Identity';
 
 const handleLogin = jest.fn();
 const handleLogout = jest.fn();
@@ -24,7 +24,7 @@ it('renders the login button', () => {
 });
 
 it('renders the logout button', () => {
-  const credential = new CredentialMock()
+  const credential = new CredentialMock();
   const identityComponent = shallow(<Identity credential={credential} handleLogin={handleLogin} handleLogout={handleLogout}/>);
   expect(identityComponent.text()).toContain('Logged in as testuser');
 
